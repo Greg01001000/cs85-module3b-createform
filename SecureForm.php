@@ -29,7 +29,7 @@
             else {
                 $retVal = filter_var($data, FILTER_SANITIZE_EMAIL);
                 if (!filter_var($retVal, FILTER_VALIDATE_EMAIL)) {
-                    echo "\"$data\" is not a valid email address. <br />\n";
+                    echo "\"$retVal\" is not a valid email address. <br />\n";
                     ++$errorCount;                    
                 }
             }
@@ -71,3 +71,23 @@
             else
                 $ShowForm = TRUE;
         }
+
+        if ($ShowForm == TRUE) {
+            if ($errorCount>0)
+                echo "<p>Please re-enter the form information below.</p>\n";
+            displayForm($Name, $Email, $Topic, $Message);
+        } else {
+            $SenderAddress = "$Name <$Email>";
+            $Headers = "From: $SenderAddress\nCC: $SenderAddress\n";
+
+            $result = mail('recipient@example.com', $Topic, $Message, $Headers);
+
+            if ($result)
+                echo "<p>Your message has been sent. Thank you, " . $Name . ".</p>\n";
+            else
+                echo "<p>There was an error sending your message, " . $Name . ".</p>\n";
+
+        }
+    ?>
+</body>
+</html>
