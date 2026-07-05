@@ -52,3 +52,22 @@
                     <input type='submit' name='Submit' value='Send Form' /></p>
             </form>
         <?php }
+
+        $ShowForm = TRUE;
+        global $errorCount;
+        $errorCount = 0;
+        $Name = '';
+        $Email = '';
+        $Topic = '';
+        $Message = '';
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $Name = validateInput($_POST['Name'],'Your full name');
+            $Email = validateEmail($_POST['Email'],'Your email address');
+            $Topic = validateInput($_POST['Topic'],'Topic of message');
+            $Message = validateInput($_POST['Message'],'Your message');
+            if ($errorCount == 0)
+                $ShowForm = FALSE;
+            else
+                $ShowForm = TRUE;
+        }
