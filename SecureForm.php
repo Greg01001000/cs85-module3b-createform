@@ -40,13 +40,13 @@
             ?><h2 style='text-align:center'>Send Message</h2>
             <form name='message' action='' method='post'>
                 <input type='hidden' name='_token' value='<?php echo csrf_token(); ?>'>
-                <p>Full name:
+                <p>Your full name:
                     <input type='text' name='Name' value='<?php echo $Name; ?>' /></p>
-                <p>Email address:
+                <p>Your email address:
                     <input type='text' name='Email' value='<?php echo $Email; ?>' /></p>
-                <p>Topic of message:
+                <p>Topic of your message:
                     <input type='text' name='Topic' value='<?php echo $Topic; ?>' /></p>
-                <p>Message:<br />
+                <p>Your message:<br />
                     <textarea name='Message'><?php echo $Message; ?></textarea></p>
                 <p><input type='reset' value='Clear Form' />&nbsp; &nbsp;
                     <input type='submit' name='Submit' value='Send Form' /></p>
@@ -71,6 +71,26 @@
             else
                 $ShowForm = TRUE;
         }
+
+        /* OUTPUT PREDICTIONS: 1st load should show the HTML form with the centered 
+        title, 'Send Message', in h2 style, and four empty fields arranged vertically, 
+        labeled 'Your full name:','Your email address:', 'Topic of your message:', and 
+        'Your message:'. The last field is a textarea; the other fields are simple text
+        boxes. It should show two buttons at the bottom, labeled 'Clear Form' and 
+        'Submit'. If the user submits incomplete input and/or an invalid email address,
+        it should show a message for each invalid or empty field, saying that the field
+        is required, or for the 'Email' field, possibly saying the submitted email 
+        address is invalid, while showing the submitted data in each field. If data are
+        submitted in all fields and the email address appears valid, it should send the
+        user-submitted message as an email to both the recipient and the user and show
+        a status message on the web page saying whether the email was able to be sent.
+        
+        In $_POST, after the user submits the form, I expect to see a 6-element 
+        associative array with keys of 'Name', 'Email', 'Topic', 'Message', 'Submit',
+        and '_token'. The first four elements' values should be the corresponding user-
+        submitted data. The 'Submit' value should be 'Send Form'. The '_token' value
+        should be a randomly-generated string unique to the user's session and matching
+        the token stored on our server for the session. */
 
         if ($ShowForm == TRUE) {
             if ($errorCount>0)
